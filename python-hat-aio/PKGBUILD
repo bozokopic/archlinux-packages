@@ -1,3 +1,5 @@
+# Maintainer: Bozo Kopic <bozo@kopic.xyz>
+
 _name=hat-aio
 pkgname=python-$_name
 pkgver=0.7.3
