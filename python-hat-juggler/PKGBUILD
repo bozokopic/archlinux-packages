@@ -1,17 +1,17 @@
 # Maintainer: Bozo Kopic <bozo@kopic.xyz>
 
-_name=hat-util
+_name=hat-juggler
 pkgname=python-$_name
-pkgver=0.6.8
+pkgver=0.6.10
 pkgrel=1
-pkgdesc="Hat utility library"
-url="https://github.com/hat-open/hat-util"
+pkgdesc="Juggler communication protocol"
+url="https://github.com/hat-open/hat-juggler"
 license=('Apache')
 arch=('any')
-depends=('python')
+depends=('python-aiohttp' 'python-hat-aio' 'python-hat-json' 'python-hat-util')
 makedepends=('python-hat-doit' 'python-installer')
-source=("https://github.com/hat-open/hat-util/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('7dd6717cfb0e817abd02954cf2249bdeec2dc3d45e20047155a3d38ffd66ba43')
+source=("https://github.com/hat-open/hat-juggler/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('179e8f7664898860c5cc127467e53e9fea103fdf410ae7f6e449b763f72784d6')
 
 build() {
     cd "$srcdir/$_name-$pkgver"

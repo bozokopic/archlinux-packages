@@ -2,10 +2,12 @@
 
 set -e
 
-PACKAGES="opcut
+PACKAGES="hat-syslog
+          opcut
           python-hat-aio
           python-hat-doit
           python-hat-json
+          python-hat-juggler
           python-hat-util"
 
 cd $(dirname -- "$0")
