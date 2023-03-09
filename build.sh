@@ -4,14 +4,14 @@ set -e
 
 cd $(dirname -- "$0")
 
-PACKAGE=$1
+package=$1
 
-if [ -z "$PACKAGE" -o ! -d "$PACKAGE" ]; then
+if [ ! -f "./$package/PKGBUILD" ]; then
     echo "invalid package" 1>&2
     exit 1
 fi
 
-cd $PACKAGE
+cd $package
 
 export PATH=/usr/bin:$PATH
 
