@@ -2,18 +2,21 @@
 
 set -e
 
-cd $(dirname -- "$0")
+makepkg_opts="-C"
 
-package=$1
+while getopts g flag; do
+    case $flag in
+        g) makepkg_opts="$makepkg_opts -g";;
+        ?) ;;
+    esac
+done
+shift $((OPTIND - 1))
 
-if [ ! -f "./$package/PKGBUILD" ]; then
-    echo "invalid package" 1>&2
-    exit 1
-fi
+. "$(dirname -- "$0")/env.sh"
 
-cd $package
+for package in $packages; do
+    echo ">>" $package
 
-export PATH=/usr/bin:$PATH
-
-makepkg -g
-makepkg -C
+    set_makepkg_envs $package
+    (cd "$root_dir/$package"; makepkg $makepkg_opts)
+done
