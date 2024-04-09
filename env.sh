@@ -1,30 +1,32 @@
-root_dir="$(cd "$(dirname -- "$0")"; pwd)"
-build_dir="$root_dir/build"
-aur_dir="$root_dir/aur"
+: ${ROOT_DIR:?}
 
-if [ $# -gt 0 ]; then
-    packages="$*"
-else
-    packages="$(find "$root_dir" -mindepth 2 -maxdepth 2 -type f -name PKGBUILD | \
-                xargs -I {} dirname {} | \
-                xargs -I {} basename {})"
-fi
-
-for package in $packages; do
-    if [ ! -f "$root_dir/$package/PKGBUILD" ]; then
-        echo "invalid package $package" 1>&2
-        exit 1
-    fi
-done
+BUILD_DIR="$ROOT_DIR/build"
+AUR_DIR="$ROOT_DIR/aur"
 
 export PATH="/usr/bin:$PATH"
 
 
+get_packages() (
+    if [ $# -gt 0 ]; then
+        for package in "$@"; do
+            if [ ! -f "$ROOT_DIR/$package/PKGBUILD" ]; then
+                echo "invalid package $package" 1>&2
+                exit 1
+            fi
+            echo $package
+        done
+    else
+        find "$ROOT_DIR" -mindepth 2 -maxdepth 2 -type f -name PKGBUILD | \
+            xargs -I {} dirname {} | \
+            xargs -I {} basename {}
+    fi
+)
+
+
 set_makepkg_envs() {
-    package=$1
-    export PKGDEST="$build_dir/$package"
-    export SRCDEST="$build_dir/$package"
-    export SRCPKGDEST="$build_dir"
-    export LOGDEST="$build_dir"
-    export BUILDDIR="$build_dir"
+    export PKGDEST="$BUILD_DIR/$1"
+    export SRCDEST="$BUILD_DIR/$1"
+    export SRCPKGDEST="$BUILD_DIR"
+    export LOGDEST="$BUILD_DIR"
+    export BUILDDIR="$BUILD_DIR"
 }

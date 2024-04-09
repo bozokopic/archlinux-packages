@@ -2,6 +2,9 @@
 
 set -e
 
+ROOT_DIR=$(dirname "$(realpath "$0")")
+. $ROOT_DIR/env.sh
+
 makepkg_opts="-C"
 
 while getopts g flag; do
@@ -12,11 +15,9 @@ while getopts g flag; do
 done
 shift $((OPTIND - 1))
 
-. "$(dirname -- "$0")/env.sh"
-
-for package in $packages; do
+for package in $(get_packages "$@"); do
     echo ">>" $package
 
     set_makepkg_envs $package
-    (cd "$root_dir/$package"; makepkg $makepkg_opts)
+    (cd "$ROOT_DIR/$package"; makepkg $makepkg_opts)
 done
