@@ -18,7 +18,7 @@ for package in $(get_packages "$@"); do
 
     cp -p -r -t "$AUR_DIR/$package" "$ROOT_DIR/$package/"*
 
-    (cd "$AUR_DIR/$package"; makepkg --printsrcinfo > .SRCINFO)
+    (cd "$AUR_DIR/$package"; makepkg --printsrcinfo >.SRCINFO)
 
     if git -C "$AUR_DIR/$package" diff --quiet; then
         echo "OK"
